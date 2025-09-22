@@ -27,4 +27,5 @@ RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Comando por defecto (se puede sobrescribir en docker-compose o CLI)
+# Comentario extra
 CMD ["gunicorn", "postgresTest.wsgi:application", "--bind", "0.0.0.0:8000"]
