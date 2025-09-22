@@ -1,0 +1,17 @@
+[phases.setup]
+nixPkgs = ["python312", "python312Packages.pip", "python312Packages.virtualenv"]
+
+[phases.install]
+cmds = [
+  "pip install --upgrade pip",
+  "pip install asgiref==3.9.1 Django==5.2.6 django-environ==0.12.0 djangorestframework==3.16.1 gunicorn==23.0.0 packaging==25.0 psycopg2==2.9.10 psycopg2-binary==2.9.10 sqlparse==0.5.3 tzdata==2025.2"
+]
+
+[phases.build]
+cmds = [
+  "python manage.py collectstatic --noinput",
+  "python manage.py migrate --noinput"
+]
+
+[start]
+cmd = "gunicorn --bind :$PORT tu_proyecto.wsgi:application"
