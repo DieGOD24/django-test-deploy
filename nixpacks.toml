@@ -17,10 +17,4 @@ cmds = [
 ]
 
 [start]
-cmds = [
-  ". /opt/venv/bin/activate",
-  "cp .env .env.build",  # Copia el archivo .env para el build
-  "set -a && . .env.build && set +a",  # Carga las variables de entorno
-  "python manage.py collectstatic --noinput",
-  "python manage.py migrate --noinput"
-]
+cmd = ". /opt/venv/bin/activate && gunicorn tu_proyecto.wsgi:application --bind 0.0.0.0:$PORT"
