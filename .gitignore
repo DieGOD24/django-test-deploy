@@ -57,10 +57,10 @@ coverage.xml
 .venv
 env/
 venv/
-.venv/
 ENV/
 env.bak/
 venv.bak/
+
 
 # Django stuff:
 *.sqlite3
