@@ -1,33 +1,30 @@
-# Usa una imagen ligera de Python
+# Usa una imagen base ligera de Python
 FROM python:3.12.7-slim
 
-# Establece la carpeta de trabajo dentro del contenedor
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos necesarios
+# Copia el requirements.txt e instala dependencias
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Instala dependencias del sistema (como libpq para PostgreSQL y tzdata para zona horaria)
+# Instala dependencias del sistema necesarias para PostgreSQL y zona horaria
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     tzdata \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copia el resto del código del proyecto
+# Copia el resto de los archivos de la app
 COPY . .
 
-# Copia y da permisos al entrypoint
+# Copia el entrypoint y le da permisos
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Exponer puerto (ajusta si usas otro)
-EXPOSE 8000
-
-# Ejecuta el script de entrada que correrá las migraciones y luego lanzará Gunicorn
+# Define el script de entrada por defecto
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Comando por defecto
+# Comando por defecto (se puede sobrescribir en docker-compose o CLI)
 CMD ["gunicorn", "postgresTest.wsgi:application", "--bind", "0.0.0.0:8000"]
