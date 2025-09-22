@@ -20,6 +20,7 @@ environ.Env.read_env()
 
 CSRF_TRUSTED_ORIGINS = [
     "https://talentia-backend.nczxdj.easypanel.host",
+    "https://backend.xtalentia.com"
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
